@@ -30,7 +30,7 @@ twitter_username: lbb88
 github_username:  lbb88
 
 # Build settings
-theme: minima
+theme: architect
 plugins:
   - jekyll-feed
 
