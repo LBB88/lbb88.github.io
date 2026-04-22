@@ -28,6 +28,7 @@ baseurl: "" # the subpath of your site, e.g. /blog
 url: "https://lbb88.github.io" # the base hostname & protocol for your site, e.g. http://example.com
 twitter_username: lbb88
 github_username:  lbb88
+repository: LBB88/lbb88.github.io
 
 # Build settings
 remote_theme: pages-themes/architect@v0.2.0
