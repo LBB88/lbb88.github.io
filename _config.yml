@@ -31,9 +31,8 @@ github_username:  lbb88
 repository: LBB88/lbb88.github.io
 
 # Build settings
-remote_theme: pages-themes/architect@v0.2.0
+theme: minima
 plugins:
-  - jekyll-remote-theme
   - jekyll-feed
 
 
