@@ -2,7 +2,7 @@
 layout: page
 title: "Topic 1 Page"
 permalink: /my-topic-1/
-categories: topic1, topic3
+categories: topic1
 ---
 
 ![My Photo](/assets/images/img.jpg)

@@ -31,4 +31,4 @@ Check out the [Jekyll docs][jekyll-docs] for more info on how to get the most ou
 
 
 
-Check out more in the [Jekyll category](/topic1).
+Check out more in the [Jekyll category](/my-topic-1).

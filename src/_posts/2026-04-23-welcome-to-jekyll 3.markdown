@@ -33,4 +33,4 @@ Check out the [Jekyll docs][jekyll-docs] for more info on how to get the most ou
 [![Video Thumbnail](/assets/images/thumb.png)](/assets/videos/media.mp4){: width="200px"}
 
 
-Check out more in the [Jekyll category](/topic2).
+Check out more in the [Jekyll category](/my-topic-2).
