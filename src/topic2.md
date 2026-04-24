@@ -12,7 +12,7 @@ categories: topic2
 [![Video Thumbnail](/assets/images/thumb.png)](/assets/videos/media.mp4){: width="200px"}
 
 
-{% assign filtered_posts = site.posts | where: "category", page.category_name %}
+{% assign filtered_posts = site.posts | where: "categories", page.category_name %}
 
 <ul>
   {% for post in filtered_posts %}

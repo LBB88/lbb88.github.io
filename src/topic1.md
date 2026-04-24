@@ -2,7 +2,7 @@
 layout: page
 title: "Topic 1 Page"
 permalink: /my-topic-1/
-categories: topic1
+categories: topic1, topic3
 ---
 
 ![My Photo](/assets/images/img.jpg)
@@ -69,7 +69,7 @@ function helloWorld() {
 - [ ] Add content
 
 
-{% assign filtered_posts = site.posts | where: "category", page.category_name %}
+{% assign filtered_posts = site.posts | where: "categories", page.category_name %}
 
 <ul>
   {% for post in filtered_posts %}

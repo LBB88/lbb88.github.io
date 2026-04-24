@@ -6,3 +6,7 @@ categories: topic3
 ---
 
 Your post content goes here. You can use **Markdown** formatting.
+
+![My Photo](/assets/images/img.jpg)
+
+Check out more in the [Jekyll category](/topic3).
