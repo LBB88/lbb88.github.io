@@ -3,4 +3,6 @@ layout: page
 title: "About Me"
 ---
 
-TEST
+TEST the video
+
+[Watch the video](/assets/videos/media.mp4)

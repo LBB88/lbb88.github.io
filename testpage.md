@@ -7,3 +7,5 @@ permalink: /my-topic-1/
 This is my topic 1 page content.
 
 You can write anything here using **Markdown** formatting.
+
+![My Photo](/assets/images/img.jpg)
