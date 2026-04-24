@@ -8,7 +8,24 @@ Personal website hosted on GitHub Pages.
 
 ## Setup
 
-No build required. This is a static site deployed via GitHub Pages.
+This is a Jekyll site deployed via GitHub Pages.
+
+## Project Structure
+
+All Jekyll source files are in the `src/` directory:
+
+```
+src/
+├── _config.yml          # Jekyll configuration
+├── _posts/              # Blog posts
+├── assets/              # Static assets
+│   ├── images/          # Image files
+│   └── videos/          # Video files
+├── 404.html             # 404 error page
+├── about.markdown       # About page
+├── index.markdown       # Home page
+└── ...                  # Other pages
+```
 
 ## Deployment
 
@@ -25,13 +42,13 @@ Push to the `main` branch to trigger automatic deployment via GitHub Actions.
 
 ### Adding Blog Posts
 
-Create a new file in the `_posts/` directory with this naming format:
+Create a new file in `src/_posts/` with this naming format:
 
 ```
 YEAR-MONTH-DAY-title.md
 ```
 
-Example: `2026-04-25-my-new-post.md`
+Example: `src/_posts/2026-04-25-my-new-post.md`
 
 **Important rules:**
 - The date in the filename must be **today or in the past**. Future dates won't appear.
@@ -58,7 +75,7 @@ After adding the file, commit and push to `main`. The site will rebuild automati
 
 ### Adding Pages
 
-Create a new `.md` file in the root directory:
+Create a new `.md` file in `src/`:
 
 ```markdown
 ---
@@ -81,17 +98,7 @@ Write your actual content here. Don't leave it empty or with just placeholder te
 
 The page will appear in the site navigation automatically.
 
-### Local Preview (Optional)
-
-To preview changes before pushing:
-
-```bash
-bundle exec jekyll serve
-```
-
-Then visit `http://localhost:4000` in your browser.
-
-### Adding Images
+### Adding Images to Posts and Pages
 
 #### External Images (from URL)
 
@@ -109,17 +116,12 @@ Or with a title:
 
 #### Local Images
 
-1. Create an `assets/images/` directory if it doesn't exist:
+1. Add your image file to `src/assets/images/`:
    ```bash
-   mkdir -p assets/images
+   cp my-photo.jpg src/assets/images/
    ```
 
-2. Add your image file to `assets/images/`:
-   ```bash
-   cp my-photo.jpg assets/images/
-   ```
-
-3. Reference it in your post or page:
+2. Reference it in your post or page:
    ```markdown
    ![My Photo](/assets/images/my-photo.jpg)
    ```
@@ -129,7 +131,25 @@ Or with a title:
 - Keep images under 1MB for faster loading
 - Use descriptive alt text for accessibility
 
-### Adding Videos
+#### Modifying Existing Posts/Pages to Add Images
+
+Open the existing `.md` file in `src/_posts/` or `src/` and add the image reference in the content:
+
+```markdown
+---
+layout: post
+title: "My Existing Post"
+date: 2026-04-25 10:00:00 +0800
+---
+
+Here's my original content.
+
+![New Image](/assets/images/new-photo.jpg)
+
+More content here...
+```
+
+### Adding Videos to Posts and Pages
 
 #### YouTube Videos
 
@@ -156,12 +176,50 @@ Or embed directly:
 </video>
 ```
 
-Store local videos in `assets/videos/` similar to images.
+#### Local Videos
+
+1. Add your video file to `src/assets/videos/`:
+   ```bash
+   cp my-video.mp4 src/assets/videos/
+   ```
+
+2. Reference it in your post or page using the HTML embed above.
+
+#### Modifying Existing Posts/Pages to Add Videos
+
+Open the existing `.md` file and add the video embed in the content:
+
+```markdown
+---
+layout: post
+title: "My Existing Post"
+date: 2026-04-25 10:00:00 +0800
+---
+
+Here's my original content.
+
+<video width="640" height="360" controls>
+  <source src="/assets/videos/new-video.mp4" type="video/mp4">
+</video>
+
+More content here...
+```
+
+### Local Preview (Optional)
+
+To preview changes before pushing:
+
+```bash
+cd src
+bundle exec jekyll serve
+```
+
+Then visit `http://localhost:4000` in your browser.
 
 **Troubleshooting:**
 
 - **New post not showing?** Check that the date is today or in the past, not a future date.
 - **New page is blank?** Make sure you wrote actual content after the front matter (`---`).
 - **Changes not appearing?** It can take 1-2 minutes after push for the site to rebuild and deploy.
-- **Images not loading?** Verify the path is correct. For local images, make sure they're committed and pushed to `main`.
+- **Images not loading?** Verify the path is correct. For local images, make sure they're in `src/assets/images/` and pushed to `main`.
 - **Videos not playing?** Check that the video URL is accessible and the embed code is correct.
