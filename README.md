@@ -91,8 +91,77 @@ bundle exec jekyll serve
 
 Then visit `http://localhost:4000` in your browser.
 
+### Adding Images
+
+#### External Images (from URL)
+
+Use standard Markdown syntax:
+
+```markdown
+![Alt text](https://example.com/image.jpg)
+```
+
+Or with a title:
+
+```markdown
+![Alt text](https://example.com/image.jpg "Image title")
+```
+
+#### Local Images
+
+1. Create an `assets/images/` directory if it doesn't exist:
+   ```bash
+   mkdir -p assets/images
+   ```
+
+2. Add your image file to `assets/images/`:
+   ```bash
+   cp my-photo.jpg assets/images/
+   ```
+
+3. Reference it in your post or page:
+   ```markdown
+   ![My Photo](/assets/images/my-photo.jpg)
+   ```
+
+**Important:**
+- Supported formats: `.jpg`, `.jpeg`, `.png`, `.gif`, `.svg`, `.webp`
+- Keep images under 1MB for faster loading
+- Use descriptive alt text for accessibility
+
+### Adding Videos
+
+#### YouTube Videos
+
+Use an HTML embed (Markdown supports HTML):
+
+```html
+<iframe width="560" height="315" src="https://www.youtube.com/embed/VIDEO_ID" frameborder="0" allowfullscreen></iframe>
+```
+
+Replace `VIDEO_ID` with the actual YouTube video ID (the part after `v=` in the URL).
+
+#### External Video Files
+
+```markdown
+[Download video](https://example.com/video.mp4)
+```
+
+Or embed directly:
+
+```html
+<video width="640" height="360" controls>
+  <source src="/assets/videos/my-video.mp4" type="video/mp4">
+  Your browser does not support the video tag.
+</video>
+```
+
+Store local videos in `assets/videos/` similar to images.
+
 **Troubleshooting:**
 
 - **New post not showing?** Check that the date is today or in the past, not a future date.
 - **New page is blank?** Make sure you wrote actual content after the front matter (`---`).
 - **Changes not appearing?** It can take 1-2 minutes after push for the site to rebuild and deploy.
+- **Images not loading?** Verify the path is correct. For local images, make sure they're committed and pushed to `main`.
+- **Videos not playing?** Check that the video URL is accessible and the embed code is correct.
