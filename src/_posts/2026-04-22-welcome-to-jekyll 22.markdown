@@ -29,15 +29,16 @@ Check out the [Jekyll docs][jekyll-docs] for more info on how to get the most ou
 [jekyll-talk]: https://talk.jekyllrb.com/
 
 
-{% assign filtered_posts = site.posts | where_exp: "post", "post.url != page.url" | where: "categories", page.categories | limit: 2 %}
+{% capture category %}{{ page.categories | first }}{% endcapture %}
+{% assign filtered_posts = site.posts | where_exp: "post", "post.url != page.url" | where_exp: "post", "post.categories contains category" %}
 
 <ul>
-{% for post in filtered_posts %}
+{% for post in filtered_posts limit: 2 %}
   <li><a href="{{ post.url }}">{{ post.title }}</a></li>
 {% endfor %}
 </ul>
 
-{% assign topic_page = site.pages | where: "categories", page.categories | first %}
+{% assign topic_page = site.pages | where_exp: "p", "p.categories contains category" | first %}
 {% if topic_page %}
 Check out more in the [{{ topic_page.title }}]({{ topic_page.url }}).
 {% endif %}

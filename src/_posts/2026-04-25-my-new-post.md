@@ -11,14 +11,15 @@ Your post content goes here. You can use **Markdown** formatting.
 
 
 
-{% assign filtered_posts = site.posts | where_exp: "post", "post.url != page.url" | where: "categories", page.categories | limit: 2 %}
+{% capture category %}{{ page.categories | first }}{% endcapture %}
+{% assign filtered_posts = site.posts | where_exp: "post", "post.url != page.url" | where_exp: "post", "post.categories contains category" %}
 <ul>
-{% for post in filtered_posts %}
+{% for post in filtered_posts limit: 2 %}
   <li><a href="{{ post.url }}">{{ post.title }}</a></li>
 {% endfor %}
 </ul>
 
-{% assign topic_page = site.pages | where: "categories", page.categories | first %}
+{% assign topic_page = site.pages | where_exp: "p", "p.categories contains category" | first %}
 {% if topic_page %}
 Check out more in the [{{ topic_page.title }}]({{ topic_page.url }}).
 {% endif %}
