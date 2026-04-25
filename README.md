@@ -115,6 +115,44 @@ Write your actual content here. Don't leave it empty or with just placeholder te
 
 The page will appear in the site navigation automatically.
 
+### Customizing the Landing Page
+
+The landing page (home page) is controlled by `src/index.md`. Edit the **front matter** values to change what appears on the home page:
+
+```markdown
+---
+layout: home
+hero_title: "Welcome to My Blog"
+hero_description: "Exploring topics and sharing knowledge through posts and articles."
+hero_image: /assets/images/img.jpg
+hero_image_alt: "Blog header image"
+topics_title: "Browse by Topic"
+posts_title: "Latest Posts"
+---
+```
+
+**Front matter fields:**
+
+| Field | Description |
+|-------|-------------|
+| `layout` | Must be `home` |
+| `hero_title` | Main heading displayed in the hero banner |
+| `hero_description` | Subtitle text below the hero heading |
+| `hero_image` | Path to the hero image (place image in `src/assets/images/`) |
+| `hero_image_alt` | Alt text for the hero image (accessibility) |
+| `topics_title` | Heading for the topics/categories section |
+| `posts_title` | Heading for the latest posts section |
+
+**To update the hero image:**
+1. Add your image to `src/assets/images/`
+2. Update `hero_image` in `src/index.md` to point to the new file (e.g., `/assets/images/my-hero.jpg`)
+3. Update `hero_image_alt` with a descriptive alt text
+
+**To update text content:**
+Simply edit the values in the front matter of `src/index.md`.
+
+After making changes, commit and push to `main` to see them live.
+
 ### Adding Images to Posts and Pages
 
 #### External Images (from URL)
