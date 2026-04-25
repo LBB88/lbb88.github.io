@@ -37,4 +37,4 @@ Check out the [Jekyll docs][jekyll-docs] for more info on how to get the most ou
 {% endfor %}
 </ul>
 
-Check out more in the [Jekyll category](/my-topic-1).
+Check out more in the [topic category](/my-topic-{{ page.categories[0] | replace: "topic", "" }}/).

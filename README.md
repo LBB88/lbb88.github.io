@@ -31,6 +31,23 @@ src/
 
 Push to the `main` branch to trigger automatic deployment via GitHub Actions.
 
+## Commit and Push Changes
+
+After making changes to your content, commit and push them to the `main` branch:
+
+```bash
+# Stage all changes
+git add -A
+
+# Commit with a descriptive message
+git commit -m "feat(content): add new blog post about..."
+
+# Push to main branch
+git push origin main
+```
+
+**Tip:** Use conventional commit messages like `feat(content):`, `fix(content):`, or `chore(config):` to keep the history clean.
+
 ## Enabling GitHub Pages
 
 1. Go to your repository **Settings**.

@@ -5,6 +5,9 @@ permalink: /my-topic-3/
 categories: topic3
 ---
 
+Test content
+
+
 {% assign filtered_posts = site.posts | where: "categories", page.categories %}
 
 <ul>
