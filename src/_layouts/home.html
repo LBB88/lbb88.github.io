@@ -1,0 +1,141 @@
+---
+layout: default
+---
+
+<style>
+  .hero {
+    text-align: center;
+    padding: 3rem 1rem;
+    background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+    color: white;
+    border-radius: 8px;
+    margin-bottom: 2rem;
+  }
+  .hero-image {
+    max-width: 200px;
+    border-radius: 50%;
+    margin-bottom: 1.5rem;
+    box-shadow: 0 4px 15px rgba(0,0,0,0.3);
+  }
+  .hero h1 {
+    margin: 0 0 0.5rem;
+    font-size: 2.5rem;
+  }
+  .hero p {
+    margin: 0;
+    font-size: 1.2rem;
+    opacity: 0.9;
+  }
+  .section-title {
+    font-size: 1.8rem;
+    margin: 2rem 0 1rem;
+    border-bottom: 2px solid #e8e8e8;
+    padding-bottom: 0.5rem;
+  }
+  .topic-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+    gap: 1.5rem;
+    margin-bottom: 2rem;
+  }
+  .topic-card {
+    display: block;
+    padding: 1.5rem;
+    border: 1px solid #e8e8e8;
+    border-radius: 8px;
+    text-decoration: none;
+    color: inherit;
+    transition: transform 0.2s, box-shadow 0.2s;
+    background: white;
+  }
+  .topic-card:hover {
+    transform: translateY(-4px);
+    box-shadow: 0 8px 25px rgba(0,0,0,0.1);
+  }
+  .topic-card h3 {
+    margin: 0 0 0.5rem;
+    color: #2a7ae4;
+  }
+  .topic-card p {
+    margin: 0;
+    color: #666;
+    font-size: 0.95rem;
+  }
+  .topic-card .category-badge {
+    display: inline-block;
+    background: #f0f0f0;
+    padding: 0.2rem 0.6rem;
+    border-radius: 12px;
+    font-size: 0.8rem;
+    color: #555;
+    margin-top: 0.5rem;
+  }
+  .post-list {
+    list-style: none;
+    padding: 0;
+  }
+  .post-list li {
+    padding: 1rem 0;
+    border-bottom: 1px solid #eee;
+  }
+  .post-list li:last-child {
+    border-bottom: none;
+  }
+  .post-meta {
+    color: #888;
+    font-size: 0.9rem;
+  }
+  .post-list h3 {
+    margin: 0.3rem 0 0;
+    font-size: 1.2rem;
+  }
+  .post-list a {
+    color: #2a7ae4;
+    text-decoration: none;
+  }
+  .post-list a:hover {
+    text-decoration: underline;
+  }
+</style>
+
+<div class="home">
+  <section class="hero">
+    <img src="{{ page.hero_image | default: '/assets/images/img.jpg' | relative_url }}" alt="{{ page.hero_image_alt | default: 'Welcome' }}" class="hero-image">
+    <h1>{{ page.hero_title | default: site.title | default: "Welcome" }}</h1>
+    <p>{{ page.hero_description | default: site.description | default: "A blog about various topics" }}</p>
+  </section>
+
+  <section class="topics">
+    <h2 class="section-title">{{ page.topics_title | default: "Topics" }}</h2>
+    <div class="topic-grid">
+      {% for topic in site.pages %}
+        {% if topic.layout == "page" and topic.categories %}
+          <a href="{{ topic.url | relative_url }}" class="topic-card">
+            <h3>{{ topic.title }}</h3>
+            <p>Explore posts about {{ topic.categories }}</p>
+            <span class="category-badge">{{ topic.categories }}</span>
+          </a>
+        {% endif %}
+      {% endfor %}
+    </div>
+  </section>
+
+  <section class="latest-posts">
+    <h2 class="section-title">{{ page.posts_title | default: "Latest Posts" }}</h2>
+    {% if site.posts.size > 0 %}
+      <ul class="post-list">
+        {% for post in site.posts limit: 10 %}
+          <li>
+            <span class="post-meta">{{ post.date | date: "%b %-d, %Y" }}</span>
+            <h3><a href="{{ post.url | relative_url }}">{{ post.title | escape }}</a></h3>
+          </li>
+        {% endfor %}
+      </ul>
+      <p class="rss-subscribe">Subscribe <a href="{{ "/feed.xml" | relative_url }}">via RSS</a></p>
+    {% else %}
+      <p>No posts yet. Check back soon!</p>
+    {% endif %}
+  </section>
+
+  {{ content }}
+</div>
