@@ -333,3 +333,56 @@ When creating new posts or pages, verify they contain:
 - [ ] Liquid code block for related posts (posts) or post listing (pages)
 - [ ] Dynamic category link (posts only)
 - [ ] Content above the Liquid code block
+
+## Activating the Validation Skill
+
+A validation skill is included in this repository to automatically check that your markdown files contain all required sections.
+
+### Manual Validation
+
+Run the validation script directly:
+
+```bash
+# Validate all posts
+python3 .opencode/skills/validate-templates/validate-templates.py src/_posts/
+
+# Validate all pages
+python3 .opencode/skills/validate-templates/validate-templates.py src/topic1.md
+
+# Validate a specific file
+python3 .opencode/skills/validate-templates/validate-templates.py src/_posts/2026-04-25-my-post.md
+```
+
+### What It Checks
+
+**For Posts:**
+- Frontmatter with `layout`, `title`, `date`, `categories`
+- Related posts Liquid block (`where_exp` with `post.categories contains`)
+- `limit: 2` set in the loop
+- Dynamic topic page link (`p.categories contains`)
+- Content exists before Liquid blocks
+
+**For Pages:**
+- Frontmatter with `layout`, `title`, `permalink`, `categories`
+- Post listing Liquid block (`where: "categories", page.categories`)
+- Content exists before Liquid blocks
+
+### Example Output
+
+```
+============================================================
+Validating: src/_posts/2026-04-25-my-new-post.md
+Type: post
+============================================================
+  ✓ Frontmatter valid
+  ✓ Required fields present
+  ✓ Liquid blocks valid
+  ✓ Content before Liquid block
+
+============================================================
+SUMMARY
+============================================================
+✓ PASS: src/_posts/2026-04-25-my-new-post.md
+
+Total: 1 | Passed: 1 | Failed: 0
+```
