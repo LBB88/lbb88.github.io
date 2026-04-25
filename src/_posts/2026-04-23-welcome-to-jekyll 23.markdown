@@ -1,6 +1,6 @@
 ---
 layout: post
-title:  "Welcome to Jekyll!"
+title:  "Welcome to Jekyll!-topic2"
 date:   2026-04-23 16:27:50 +0800
 categories: topic2
 ---
@@ -36,4 +36,7 @@ Check out the [Jekyll docs][jekyll-docs] for more info on how to get the most ou
 {% endfor %}
 </ul>
 
-Check out more in the [topic category](/my-topic-{{ page.categories[0] | replace: "topic", "" }}/).
+{% assign topic_page = site.pages | where: "categories", page.categories | first %}
+{% if topic_page %}
+Check out more in the [{{ topic_page.title }}]({{ topic_page.url }}).
+{% endif %}
