@@ -69,7 +69,7 @@ function helloWorld() {
 - [ ] Add content
 
 
-{% assign filtered_posts = site.posts | where: "categories", page.category_name %}
+{% assign filtered_posts = site.posts | where: "categories", page.categories %}
 
 <ul>
   {% for post in filtered_posts %}

@@ -5,7 +5,7 @@ permalink: /my-topic-3/
 categories: topic3
 ---
 
-{% assign filtered_posts = site.posts | where: "categories, page.category_name %}
+{% assign filtered_posts = site.posts | where: "categories", page.categories %}
 
 <ul>
   {% for post in filtered_posts %}
