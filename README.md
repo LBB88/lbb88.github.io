@@ -240,3 +240,96 @@ Then visit `http://localhost:4000` in your browser.
 - **Changes not appearing?** It can take 1-2 minutes after push for the site to rebuild and deploy.
 - **Images not loading?** Verify the path is correct. For local images, make sure they're in `src/assets/images/` and pushed to `main`.
 - **Videos not playing?** Check that the video URL is accessible and the embed code is correct.
+
+## Content Templates
+
+### Post Template
+
+Use this template for new blog posts. It automatically lists 2 related posts from the same category and provides back navigation to the category page.
+
+**Frontmatter Fields:**
+
+| Field | Required | Description |
+|-------|----------|-------------|
+| `layout` | Yes | Must be `post` |
+| `title` | Yes | The post title |
+| `date` | Yes | Publication date (YYYY-MM-DD HH:MM:SS +/-HHMM) |
+| `categories` | Yes | Single category (e.g., `topic1`) |
+
+**Template:**
+
+```markdown
+---
+layout: post
+title: "Your Post Title"
+date: YYYY-MM-DD HH:MM:SS +0800
+categories: topic1
+---
+
+Your post content here.
+
+{% capture category %}{{ page.categories | first }}{% endcapture %}
+{% assign filtered_posts = site.posts | where_exp: "post", "post.url != page.url" | where_exp: "post", "post.categories contains category" %}
+
+<ul>
+{% for post in filtered_posts limit: 2 %}
+  <li><a href="{{ post.url }}">{{ post.title }}</a></li>
+{% endfor %}
+</ul>
+
+{% assign topic_page = site.pages | where_exp: "p", "p.categories contains category" | first %}
+{% if topic_page %}
+Check out more in the [{{ topic_page.title }}]({{ topic_page.url }}).
+{% endif %}
+```
+
+### Page Template
+
+Use this template for new topic/category pages. It automatically lists all posts sharing the same category.
+
+**Frontmatter Fields:**
+
+| Field | Required | Description |
+|-------|----------|-------------|
+| `layout` | Yes | Must be `page` |
+| `title` | Yes | Page title (shown in navigation) |
+| `permalink` | Yes | URL path (e.g., `/my-topic-1/`) |
+| `categories` | Yes | Category matching posts to list |
+
+**Template:**
+
+```markdown
+---
+layout: page
+title: "Your Topic Name"
+permalink: /your-topic-path/
+categories: topic1
+---
+
+Your page content here.
+
+{% assign filtered_posts = site.posts | where: "categories", page.categories %}
+
+<ul>
+  {% for post in filtered_posts %}
+    <li><a href="{{ post.url }}">{{ post.title }}</a></li>
+  {% endfor %}
+</ul>
+```
+
+### How the Templates Work Together
+
+1. **Post** captures its category and finds other posts with the same category
+2. **Post** lists up to 2 recent related posts
+3. **Post** dynamically finds the matching topic page and links to it
+4. **Page** lists all posts sharing its category
+5. The connection is made through matching `categories` values in frontmatter
+
+### Validation
+
+When creating new posts or pages, verify they contain:
+
+- [ ] Correct frontmatter (`layout`, `title`, `date`/`permalink`, `categories`)
+- [ ] Liquid code block for related posts (posts) or post listing (pages)
+- [ ] Dynamic category link (posts only)
+- [ ] Content above the Liquid code block
