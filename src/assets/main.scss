@@ -8,8 +8,16 @@
 .site-header .wrapper,
 .site-footer .wrapper {
   max-width: 100%;
-  padding-left: 0;
-  padding-right: 0;
+  padding-left: 30px;
+  padding-right: 30px;
+}
+
+@media screen and (max-width: 800px) {
+  .site-header .wrapper,
+  .site-footer .wrapper {
+    padding-left: 15px;
+    padding-right: 15px;
+  }
 }
 
 .site-header {
