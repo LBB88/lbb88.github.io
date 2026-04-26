@@ -24,20 +24,18 @@ The simplest way to share a video is with a direct link.
 
 ### 2. Video Thumbnail with Link
 
-You can use a thumbnail image that links to the video.
+You can use a thumbnail image that links to the video. To size the thumbnail, add a Kramdown attribute block after the image syntax using `{: width="..."}` or `{: height="..."}` or both.
 
-[![Video Thumbnail](/assets/images/thumb.png)](/assets/videos/animate.mp4)
+[![Video Thumbnail](/assets/images/thumb3.png)](/assets/videos/animate.mp4)
 
-You can also control the thumbnail size using Kramdown attributes.
-
-[![Video Thumbnail](/assets/images/thumb.png)](/assets/videos/media.mp4){: width="200px"}
+[![Video Thumbnail](/assets/images/thumb9.jpeg)](/assets/videos/media.mp4){: width="100px"}
 
 **Code:**
 
 ```markdown
-[![Video Thumbnail](/assets/images/thumb.png)](/assets/videos/animate.mp4)
+[![Video Thumbnail](/assets/images/thumb3.jpeg)](/assets/videos/animate.mp4)
 
-[![Video Thumbnail](/assets/images/thumb.png)](/assets/videos/media.mp4){: width="200px"}
+[![Video Thumbnail](/assets/images/thumb9.jpeg)](/assets/videos/media.mp4){: width="100px"}
 ```
 
 ### 3. Inline Video Player
@@ -90,7 +88,7 @@ For YouTube videos, create a reusable include for a responsive iframe embed.
 
 <ul>
   {% for post in filtered_posts %}
-    <li><a href="{{ post.url }}">{{ post.title }}</a></li>
+    <li><a href="{{ post.url }}">{{ post.title }}</a> — {{ post.date | date: "%b %-d, %Y" }}</li>
   {% endfor %}
 </ul>
 

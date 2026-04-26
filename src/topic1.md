@@ -3,7 +3,7 @@ layout: page
 title: "Topic 1 Page"
 permalink: /my-topic-1/
 categories: topic1
-card_image: /assets/images/img.jpg
+card_image: /assets/images/thumb6.jpeg
 ---
 
 ![My Photo](/assets/images/img.jpg)
@@ -70,10 +70,14 @@ function helloWorld() {
 - [ ] Add content
 
 
+## Explore Related Posts
+
 {% assign filtered_posts = site.posts | where: "categories", page.categories %}
 
 <ul>
   {% for post in filtered_posts %}
-    <li><a href="{{ post.url }}">{{ post.title }}</a></li>
+    <li><a href="{{ post.url }}">{{ post.title }}</a> — {{ post.date | date: "%b %-d, %Y" }}</li>
   {% endfor %}
 </ul>
+
+[← Back to all topics](/)

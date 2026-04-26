@@ -3,7 +3,7 @@ layout: page
 title: "Travel"
 permalink: /travel/
 categories: travel
-card_image: /assets/images/img.jpg
+card_image: /assets/images/thumb8.jpeg
 ---
 
 Welcome to our travel blog! Discover destinations, tips, and stories from around the world.
