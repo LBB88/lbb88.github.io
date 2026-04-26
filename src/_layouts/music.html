@@ -1,0 +1,95 @@
+---
+layout: default
+---
+
+<style>
+  .post-music .post-header {
+    background: linear-gradient(135deg, #2d3436 0%, #000000 100%);
+    color: #00d2d3;
+    padding: 2.5rem 2rem;
+    border-radius: 12px;
+    margin-bottom: 2rem;
+    text-align: center;
+    border: 2px solid #00d2d3;
+  }
+  .post-music .post-title {
+    color: #00d2d3;
+    font-size: 2.2rem;
+    margin: 0 0 0.5rem;
+    text-transform: uppercase;
+    letter-spacing: 2px;
+  }
+  .post-music .post-meta {
+    color: #b2bec3;
+    font-size: 1rem;
+    margin: 0;
+  }
+  .post-music .post-content {
+    font-size: 1.1rem;
+    line-height: 1.8;
+    color: #2d3436;
+  }
+  .post-music .post-content img {
+    border-radius: 8px;
+    box-shadow: 0 4px 20px rgba(0,0,0,0.3);
+    margin: 1.5rem 0;
+    border: 2px solid #dfe6e9;
+  }
+  .post-music .post-content blockquote {
+    border-left: 4px solid #00d2d3;
+    background: #f0f3f4;
+    padding: 1rem 1.5rem;
+    border-radius: 0 8px 8px 0;
+    font-style: italic;
+    color: #2d3436;
+  }
+  .post-music .related-posts {
+    background: #f8f9fa;
+    padding: 1.5rem;
+    border-radius: 8px;
+    margin-top: 2rem;
+    border: 1px solid #dfe6e9;
+  }
+  .post-music .related-posts h3 {
+    color: #00d2d3;
+    margin-top: 0;
+  }
+  .post-music .category-link {
+    display: inline-block;
+    margin-top: 1rem;
+    padding: 0.6rem 1.2rem;
+    background: #2d3436;
+    color: #00d2d3;
+    text-decoration: none;
+    border-radius: 20px;
+    font-weight: 500;
+    border: 2px solid #00d2d3;
+    transition: all 0.2s;
+  }
+  .post-music .category-link:hover {
+    background: #00d2d3;
+    color: #2d3436;
+  }
+</style>
+
+<article class="post post-music h-entry" itemscope itemtype="http://schema.org/BlogPosting">
+
+  <header class="post-header">
+    <h1 class="post-title p-name" itemprop="name headline">{{ page.title | escape }}</h1>
+    <p class="post-meta">
+      <time class="dt-published" datetime="{{ page.date | date_to_xmlschema }}" itemprop="datePublished">
+        {%- assign date_format = site.minima.date_format | default: "%b %-d, %Y" -%}
+        {{ page.date | date: date_format }}
+      </time>
+      {%- if page.author -%}
+        • <span itemprop="author" itemscope itemtype="http://schema.org/Person"><span class="p-author h-card" itemprop="name">{{ page.author }}</span></span>
+      {%- endif -%}
+    </p>
+  </header>
+
+  <div class="post-content e-content" itemprop="articleBody">
+    {{ content }}
+  </div>
+
+  <a class="u-url" href="{{ page.url | relative_url }}" hidden></a>
+</article>

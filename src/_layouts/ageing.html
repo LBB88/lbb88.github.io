@@ -1,0 +1,87 @@
+---
+layout: default
+---
+
+<style>
+  .post-ageing .post-header {
+    background: linear-gradient(135deg, #a29bfe 0%, #6c5ce7 100%);
+    color: white;
+    padding: 2.5rem 2rem;
+    border-radius: 12px;
+    margin-bottom: 2rem;
+    text-align: center;
+  }
+  .post-ageing .post-title {
+    color: white;
+    font-size: 2.2rem;
+    margin: 0 0 0.5rem;
+    text-shadow: 0 2px 4px rgba(0,0,0,0.2);
+  }
+  .post-ageing .post-meta {
+    color: rgba(255,255,255,0.9);
+    font-size: 1rem;
+    margin: 0;
+  }
+  .post-ageing .post-content {
+    font-size: 1.15rem;
+    line-height: 1.9;
+  }
+  .post-ageing .post-content img {
+    border-radius: 12px;
+    box-shadow: 0 4px 15px rgba(0,0,0,0.12);
+    margin: 1.5rem 0;
+  }
+  .post-ageing .post-content blockquote {
+    border-left: 4px solid #6c5ce7;
+    background: #f3f0ff;
+    padding: 1rem 1.5rem;
+    border-radius: 0 8px 8px 0;
+    font-style: italic;
+  }
+  .post-ageing .related-posts {
+    background: #f8f9fa;
+    padding: 1.5rem;
+    border-radius: 8px;
+    margin-top: 2rem;
+  }
+  .post-ageing .related-posts h3 {
+    color: #6c5ce7;
+    margin-top: 0;
+  }
+  .post-ageing .category-link {
+    display: inline-block;
+    margin-top: 1rem;
+    padding: 0.6rem 1.2rem;
+    background: #6c5ce7;
+    color: white;
+    text-decoration: none;
+    border-radius: 20px;
+    font-weight: 500;
+    transition: background 0.2s;
+  }
+  .post-ageing .category-link:hover {
+    background: #5b4cc4;
+  }
+</style>
+
+<article class="post post-ageing h-entry" itemscope itemtype="http://schema.org/BlogPosting">
+
+  <header class="post-header">
+    <h1 class="post-title p-name" itemprop="name headline">{{ page.title | escape }}</h1>
+    <p class="post-meta">
+      <time class="dt-published" datetime="{{ page.date | date_to_xmlschema }}" itemprop="datePublished">
+        {%- assign date_format = site.minima.date_format | default: "%b %-d, %Y" -%}
+        {{ page.date | date: date_format }}
+      </time>
+      {%- if page.author -%}
+        • <span itemprop="author" itemscope itemtype="http://schema.org/Person"><span class="p-author h-card" itemprop="name">{{ page.author }}</span></span>
+      {%- endif -%}
+    </p>
+  </header>
+
+  <div class="post-content e-content" itemprop="articleBody">
+    {{ content }}
+  </div>
+
+  <a class="u-url" href="{{ page.url | relative_url }}" hidden></a>
+</article>
