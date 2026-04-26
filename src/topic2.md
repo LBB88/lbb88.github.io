@@ -3,7 +3,7 @@ layout: page
 title: "Topic 2 Page"
 permalink: /my-topic-2/
 categories: topic2
-card_image: /assets/images/thumb.png
+card_image: /assets/images/thumb3.jpeg
 ---
 
 ## Ways to Embed Videos
@@ -26,16 +26,16 @@ The simplest way to share a video is with a direct link.
 
 You can use a thumbnail image that links to the video. To size the thumbnail, add a Kramdown attribute block after the image syntax using `{: width="..."}` or `{: height="..."}` or both.
 
-[![Video Thumbnail](/assets/images/thumb3.png)](/assets/videos/animate.mp4)
+[![Video Thumbnail](/assets/images/thumb3.jpeg)](/assets/videos/animate.mp4)
 
-[![Video Thumbnail](/assets/images/thumb9.jpeg)](/assets/videos/media.mp4){: width="100px"}
+[![Video Thumbnail](/assets/images/thumb9.jpeg){: width="100px"}](/assets/videos/media.mp4)
 
 **Code:**
 
 ```markdown
 [![Video Thumbnail](/assets/images/thumb3.jpeg)](/assets/videos/animate.mp4)
 
-[![Video Thumbnail](/assets/images/thumb9.jpeg)](/assets/videos/media.mp4){: width="100px"}
+[![Video Thumbnail](/assets/images/thumb9.jpeg){: width="100px"}](/assets/videos/media.mp4)
 ```
 
 ### 3. Inline Video Player
