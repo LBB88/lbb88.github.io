@@ -120,8 +120,8 @@ Copy one to `src/` and rename it to create a new topic page. Then update `title`
 
 - Always include frontmatter at the very top of `.md` files
 - Required fields: `layout`, `title`
-- Posts also need: `date`, `categories`
-- Topic pages also need: `permalink`, `categories`
+- Posts also need: `date`, `categories`, `published: true`
+- Topic pages also need: `permalink`, `categories`, `published: true`
 - Dates in filenames and frontmatter must be today or in the past
 
 ### Markdown

@@ -127,6 +127,7 @@ layout: post
 title: "My New Post"
 date: 2026-04-25 10:00:00 +0800
 categories: blog update
+published: true
 ---
 
 Your post content goes here. You can use **Markdown** formatting.
@@ -148,6 +149,7 @@ Create a new `.md` file in `src/`:
 layout: page
 title: "My Page"
 permalink: /my-page/
+published: true
 ---
 
 Write your actual content here. Don't leave it empty or with just placeholder text.
@@ -469,6 +471,7 @@ Use this template for new blog posts. It automatically lists 2 related posts fro
 | `title` | Yes | The post title |
 | `date` | Yes | Publication date (YYYY-MM-DD HH:MM:SS +/-HHMM) |
 | `categories` | Yes | Single category (e.g., `topic1`) |
+| `published` | Yes | Must be `true` for all posts and pages |
 
 **Template:**
 
@@ -509,6 +512,7 @@ Use this template for new topic/category pages. It automatically lists all posts
 | `title` | Yes | Page title (shown in navigation) |
 | `permalink` | Yes | URL path (e.g., `/my-topic-1/`) |
 | `categories` | Yes | Category matching posts to list |
+| `published` | Yes | Must be `true` for all posts and pages |
 
 **Template:**
 
