@@ -11,6 +11,7 @@ from the same category and provides back navigation to the category page.
 | `title` | Yes | The post title |
 | `date` | Yes | Publication date (YYYY-MM-DD HH:MM:SS +/-HHMM) |
 | `categories` | Yes | Single category string (e.g., `topic1`, `topic2`, `topic3`) |
+| `published` | Yes | Must be `true` for the post to be visible |
 
 ## File Naming Convention
 
@@ -29,6 +30,7 @@ layout: post
 title: "Your Post Title"
 date: YYYY-MM-DD HH:MM:SS +0800
 categories: topic1
+published: true
 ---
 
 Your post content here. You can use **Markdown** formatting.

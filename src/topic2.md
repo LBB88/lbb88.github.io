@@ -7,7 +7,7 @@ card_image: /assets/images/thumb3.jpeg
 published: true
 ---
 
-## Ways to Embed Videos
+# Ways to Embed Videos in GitHub Page
 
 This page demonstrates different methods for displaying videos on your Jekyll site using only the Minima theme.
 

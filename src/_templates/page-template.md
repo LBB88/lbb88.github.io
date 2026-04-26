@@ -11,6 +11,8 @@ posts sharing the same category as defined in the page's frontmatter.
 | `title` | Yes | The page title (displayed in navigation and heading) |
 | `permalink` | Yes | The URL path for this page (e.g., `/my-topic-1/`) |
 | `categories` | Yes | Single category string matching posts you want to list |
+| `card_image` | Yes | Background image for the home page topic card |
+| `published` | Yes | Must be `true` for the page to be visible |
 
 ## File Naming Convention
 
@@ -27,6 +29,8 @@ layout: page
 title: "Your Topic Name"
 permalink: /your-topic-path/
 categories: topic1
+card_image: /assets/images/your-image.jpg
+published: true
 ---
 
 Your page content here. This appears above the post listing.
@@ -35,9 +39,11 @@ Your page content here. This appears above the post listing.
 
 <ul>
   {% for post in filtered_posts %}
-    <li><a href="{{ post.url }}">{{ post.title }}</a></li>
+    <li><a href="{{ post.url }}">{{ post.title }}</a> — {{ post.date | date: "%b %-d, %Y" }}</li>
   {% endfor %}
 </ul>
+
+[← Back to all topics](/)
 ```
 
 ## How It Works

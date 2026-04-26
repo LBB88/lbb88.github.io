@@ -41,6 +41,7 @@ It is easy to emphasize your words:
 
 ## 4. Links and Images
 To link to a website: [Google](https://google.com)
+
 To show an image: `![Alt Text](url-to-image.jpg)`
 
 ## 5. Code
@@ -70,7 +71,7 @@ function helloWorld() {
 - [ ] Enable GitHub Pages
 - [ ] Add content
 
-
+---
 ## Explore Related Posts
 
 {% assign filtered_posts = site.posts | where: "categories", page.categories %}
