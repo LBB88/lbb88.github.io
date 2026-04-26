@@ -3,6 +3,7 @@ layout: page
 title: "Music"
 permalink: /music/
 categories: music
+card_image: /assets/images/thumb.png
 ---
 
 Welcome to our music blog! Discover new releases, reviews, and stories from the world of music.

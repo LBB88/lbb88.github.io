@@ -3,6 +3,7 @@ layout: page
 title: "Topic 2 Page"
 permalink: /my-topic-2/
 categories: topic2
+card_image: /assets/images/thumb.png
 ---
 
 ## Ways to Embed Videos
@@ -15,6 +16,12 @@ The simplest way to share a video is with a direct link.
 
 [Watch the video](/assets/videos/media.mp4)
 
+**Code:**
+
+```markdown
+[Watch the video](/assets/videos/media.mp4)
+```
+
 ### 2. Video Thumbnail with Link
 
 You can use a thumbnail image that links to the video.
@@ -25,6 +32,14 @@ You can also control the thumbnail size using Kramdown attributes.
 
 [![Video Thumbnail](/assets/images/thumb.png)](/assets/videos/media.mp4){: width="200px"}
 
+**Code:**
+
+```markdown
+[![Video Thumbnail](/assets/images/thumb.png)](/assets/videos/animate.mp4)
+
+[![Video Thumbnail](/assets/images/thumb.png)](/assets/videos/media.mp4){: width="200px"}
+```
+
 ### 3. Inline Video Player
 
 For videos hosted on your site, use the HTML5 `<video>` element to embed a player directly.
@@ -34,11 +49,38 @@ For videos hosted on your site, use the HTML5 `<video>` element to embed a playe
   Your browser does not support the video tag.
 </video>
 
+**Code:**
+
+```html
+<video width="100%" controls>
+  <source src="/assets/videos/media.mp4" type="video/mp4">
+  Your browser does not support the video tag.
+</video>
+```
+
 ### 4. YouTube Embed via Liquid Include
 
 For YouTube videos, create a reusable include for a responsive iframe embed.
 
 {% include youtube.html id="dQw4w9WgXcQ" %}
+
+**Include file (`_includes/youtube.html`):**
+
+{% raw %}
+```html
+<div class="video-container">
+  <iframe src="https://www.youtube.com/embed/{{ include.id }}" frameborder="0" allowfullscreen></iframe>
+</div>
+```
+{% endraw %}
+
+**Usage in your page:**
+
+{% raw %}
+```liquid
+{% include youtube.html id="dQw4w9WgXcQ" %}
+```
+{% endraw %}
 
 ---
 

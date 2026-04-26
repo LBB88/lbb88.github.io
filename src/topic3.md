@@ -3,6 +3,7 @@ layout: page
 title: "Topic 3 Page"
 permalink: /my-topic-3/
 categories: topic3
+card_image: /assets/images/img.jpg
 ---
 
 Test content

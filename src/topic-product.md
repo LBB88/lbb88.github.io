@@ -3,6 +3,7 @@ layout: page
 title: "Product"
 permalink: /product/
 categories: product
+card_image: /assets/images/img.jpg
 ---
 
 Welcome to our product blog! Stay updated on the latest launches, reviews, and innovations.

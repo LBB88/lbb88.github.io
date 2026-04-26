@@ -53,29 +53,52 @@ layout: default
     text-decoration: none;
     color: inherit;
     transition: transform 0.2s, box-shadow 0.2s;
-    background: white;
+    background-size: cover;
+    background-position: center;
+    position: relative;
+    overflow: hidden;
+    min-height: 180px;
+  }
+  .topic-card::before {
+    content: "";
+    position: absolute;
+    inset: 0;
+    background: rgba(0, 0, 0, 0.45);
+    transition: background 0.2s;
+    z-index: 1;
   }
   .topic-card:hover {
     transform: translateY(-4px);
-    box-shadow: 0 8px 25px rgba(0,0,0,0.1);
+    box-shadow: 0 8px 25px rgba(0,0,0,0.2);
+  }
+  .topic-card:hover::before {
+    background: rgba(0, 0, 0, 0.35);
+  }
+  .topic-card > * {
+    position: relative;
+    z-index: 2;
   }
   .topic-card h3 {
     margin: 0 0 0.5rem;
-    color: #2a7ae4;
+    color: #ffffff;
+    text-shadow: 0 1px 3px rgba(0,0,0,0.5);
   }
   .topic-card p {
     margin: 0;
-    color: #666;
+    color: rgba(255, 255, 255, 0.9);
     font-size: 0.95rem;
+    text-shadow: 0 1px 2px rgba(0,0,0,0.5);
   }
   .topic-card .category-badge {
     display: inline-block;
-    background: #f0f0f0;
+    background: rgba(255, 255, 255, 0.2);
+    backdrop-filter: blur(4px);
     padding: 0.2rem 0.6rem;
     border-radius: 12px;
     font-size: 0.8rem;
-    color: #555;
+    color: #ffffff;
     margin-top: 0.5rem;
+    border: 1px solid rgba(255, 255, 255, 0.3);
   }
   .post-list {
     list-style: none;
@@ -117,7 +140,7 @@ layout: default
     <div class="topic-grid">
       {% for topic in site.pages %}
         {% if topic.layout == "page" and topic.categories %}
-          <a href="{{ topic.url | relative_url }}" class="topic-card">
+          <a href="{{ topic.url | relative_url }}" class="topic-card" {% if topic.card_image %}style="background-image: url('{{ topic.card_image | relative_url }}');"{% endif %}>
             <h3>{{ topic.title }}</h3>
             <p>Explore posts about {{ topic.categories }}</p>
             <span class="category-badge">{{ topic.categories }}</span>

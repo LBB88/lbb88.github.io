@@ -10,6 +10,55 @@ Personal website hosted on GitHub Pages.
 
 This is a Jekyll site deployed via GitHub Pages.
 
+## Agents & Skills
+
+This project uses an AI orchestration system (Sisyphus) with specialized sub-agents and reusable skills.
+
+### Available Agents
+
+| Agent | Role |
+|-------|------|
+| **Sisyphus** | Orchestrator — plans, delegates, verifies |
+| **Sisyphus-Junior** | Task executor — implements changes |
+| **Oracle** | High-IQ consultant — architecture, debugging |
+| **Explore** | Contextual grep — finds patterns in the codebase |
+| **Librarian** | External reference — docs, OSS examples |
+| **Metis** | Pre-planning consultant — clarifies ambiguous requests |
+| **Momus** | Plan reviewer — checks work plan quality |
+
+### Available Skills
+
+Skills provide specialized workflows for specific tasks:
+
+| Skill | When to Use |
+|-------|-------------|
+| `commit-push` | Commit and push changes, update site |
+| `validate-new-pages` | Validate newly added pages and posts (recommended) |
+| `validate-templates` | Validate specific files or directories (manual) |
+| `code-warden` | Initialize code-warden snapshot tracking |
+| `github-pages-website` | Scaffold a new GitHub Pages site |
+| `skill-creator` | Create or edit skills |
+| `frontend-ui-ux` | UI/UX design and implementation |
+| `git-master` | Git operations: commits, rebases, history |
+
+### Using Skills
+
+Load a skill when starting a task that matches its description:
+
+```
+# In conversation, invoke a skill:
+/commit-push         → commits and pushes changes
+/validate-new-pages  → validates all pages and posts
+/validate-templates  → validates specific files or directories
+/skill-creator       → creates new skills
+```
+
+### Creating Skills
+
+1. Use the `/skill-creator` skill
+2. Define: name, description, trigger phrases, instructions
+3. Skills are stored in `.opencode/skills/` or `~/.config/opencode/skills/`
+
 ## Project Structure
 
 All Jekyll source files are in the `src/` directory:
@@ -114,6 +163,133 @@ Write your actual content here. Don't leave it empty or with just placeholder te
 - `permalink` — the URL path (e.g., `/my-page/`)
 
 The page will appear in the site navigation automatically.
+
+### Topic Pages (Category Landing Pages)
+
+Topic pages serve as landing pages for each category/agent. They list all posts in that category and link back to the home page.
+
+**Recommended frontmatter fields:**
+
+| Field | Required | Description |
+|-------|----------|-------------|
+| `layout` | Yes | Must be `page` |
+| `title` | Yes | Page title (shown in navigation) |
+| `permalink` | Yes | URL path (e.g., `/travel/`) |
+| `categories` | Yes | Category matching posts to list |
+| `card_image` | Recommended | Background image for home page topic card |
+
+**Example frontmatter:**
+
+```markdown
+---
+layout: page
+title: "Travel"
+permalink: /travel/
+categories: travel
+card_image: /assets/images/img.jpg
+---
+```
+
+**Full template (saved in `_templates/travel-template.md`):**
+
+```markdown
+---
+layout: page
+title: "Travel"
+permalink: /travel/
+categories: travel
+card_image: /assets/images/img.jpg
+---
+
+Welcome to our travel blog! Discover destinations, tips, and stories from around the world.
+
+![Travel Banner](/assets/images/img.jpg)
+
+## Explore Travel Posts
+
+{% assign filtered_posts = site.posts | where: "categories", page.categories %}
+
+<ul>
+  {% for post in filtered_posts %}
+    <li><a href="{{ post.url }}">{{ post.title }}</a> — {{ post.date | date: "%b %-d, %Y" }}</li>
+  {% endfor %}
+</ul>
+
+[← Back to all topics](/)
+```
+
+**Pre-built topic templates** (use as starting point):
+
+| Template | File |
+|----------|------|
+| Ageing | `_templates/ageing-template.md` |
+| Music | `_templates/music-template.md` |
+| Product | `_templates/product-template.md` |
+| Retirement | `_templates/retirement-template.md` |
+| Travel | `_templates/travel-template.md` |
+
+### Dynamic Card Background Images
+
+Topic cards on the home page display a background image. The image is set via the `card_image` frontmatter field in each topic page.
+
+**To change a card's background:**
+1. Open the topic page (e.g., `src/topic-travel.md`)
+2. Update the `card_image` value in frontmatter
+3. Commit and push — the home page card updates automatically
+
+**Image recommendations:**
+- Use images at least 400px wide
+- Keep file size under 500KB for fast loading
+- Place images in `src/assets/images/`
+- Reference with path relative to site root (e.g., `/assets/images/my-image.jpg`)
+
+**How it works:**
+The home page layout (`_layouts/home.html`) reads `topic.card_image` for each topic page and applies it as an inline `style="background-image: url('...')"` on the card element. A dark overlay is applied automatically for text readability.
+
+### Video Embedding Guide
+
+For full video embedding examples with code, see [`topic2.md`](/my-topic-2/) on the live site. Four methods are demonstrated:
+
+#### 1. Simple URL Link
+
+```markdown
+[Watch the video](/assets/videos/media.mp4)
+```
+
+#### 2. Thumbnail Image Linking to Video
+
+```markdown
+[![Video Thumbnail](/assets/images/thumb.png)](/assets/videos/animate.mp4)
+```
+
+With size control using Kramdown attributes:
+
+```markdown
+[![Video Thumbnail](/assets/images/thumb.png)](/assets/videos/media.mp4){: width="200px"}
+```
+
+#### 3. HTML5 Inline Video Player
+
+```html
+<video width="100%" controls>
+  <source src="/assets/videos/media.mp4" type="video/mp4">
+  Your browser does not support the video tag.
+</video>
+```
+
+#### 4. YouTube Embed via Liquid Include
+
+Create `_includes/youtube.html`:
+```html
+<div class="video-container">
+  <iframe src="https://www.youtube.com/embed/{{ include.id }}" frameborder="0" allowfullscreen></iframe>
+</div>
+```
+
+Use in any page:
+```liquid
+{% include youtube.html id="dQw4w9WgXcQ" %}
+```
 
 ### Customizing the Landing Page
 
@@ -374,21 +550,47 @@ When creating new posts or pages, verify they contain:
 
 ## Activating the Validation Skill
 
-A validation skill is included in this repository to automatically check that your markdown files contain all required sections.
+Two validation skills are available to check that your markdown files contain all required sections.
 
-### Manual Validation
+### Validate New Pages (Recommended)
 
-Run the validation script directly:
+The `validate-new-pages` skill automatically discovers all `.md` files in `src/` and validates them:
+
+```bash
+# Validate all pages and posts
+python3 .opencode/skills/validate-new-pages/validate-new-pages.py
+
+# Validate pages only
+python3 .opencode/skills/validate-new-pages/validate-new-pages.py --pages
+
+# Validate posts only
+python3 .opencode/skills/validate-new-pages/validate-new-pages.py --posts
+
+# Auto-fix layout mismatches (posts only)
+python3 .opencode/skills/validate-new-pages/validate-new-pages.py --apply
+```
+
+This wrapper automatically:
+- Discovers all `.md` files under `src/` (excluding `_site/`, `.opencode/`, `_templates/`, `about.md`, `index.md`)
+- Runs the `validate-templates` validator on each file
+- Reports pass/fail status with specific errors
+
+### Validate Templates (Manual)
+
+For targeted validation of specific files or directories:
 
 ```bash
 # Validate all posts
 python3 .opencode/skills/validate-templates/validate-templates.py src/_posts/
 
-# Validate all pages
-python3 .opencode/skills/validate-templates/validate-templates.py src/topic1.md
+# Validate a specific page
+python3 .opencode/skills/validate-templates/validate-templates.py src/topic-travel.md
 
-# Validate a specific file
+# Validate a specific post
 python3 .opencode/skills/validate-templates/validate-templates.py src/_posts/2026-04-25-my-post.md
+
+# Auto-fix layout mismatches
+python3 .opencode/skills/validate-templates/validate-templates.py src/_posts/ --apply
 ```
 
 ### What It Checks
