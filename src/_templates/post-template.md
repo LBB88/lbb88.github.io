@@ -30,6 +30,7 @@ layout: post
 title: "Your Post Title"
 date: YYYY-MM-DD HH:MM:SS +0800
 categories: topic1
+type: post
 published: true
 ---
 

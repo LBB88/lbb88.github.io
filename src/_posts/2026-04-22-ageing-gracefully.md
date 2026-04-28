@@ -5,6 +5,7 @@ date: 2026-04-22 10:00:00 +0800
 categories: ageing
 author: "Silver Stories"
 published: true
+type: post
 ---
 
 Ageing is a privilege denied to many. Every wrinkle tells a story, every silver strand reflects a lesson learned. Let's celebrate the beauty and wisdom that comes with growing older.

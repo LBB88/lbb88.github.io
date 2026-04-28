@@ -3,6 +3,7 @@ layout: music
 title: "Your Music Post Title"
 date: YYYY-MM-DD HH:MM:SS +0800
 categories: music
+type: post
 author: "Your Name"
 ---
 

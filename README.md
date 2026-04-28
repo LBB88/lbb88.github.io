@@ -66,14 +66,21 @@ All Jekyll source files are in the `src/` directory:
 ```
 src/
 ├── _config.yml          # Jekyll configuration
-├── _posts/              # Blog posts
-├── assets/              # Static assets
+├── _includes/           # Liquid includes (youtube.html, social.html)
+├── _layouts/            # HTML templates (home.html, travel.html, etc.)
+├── _posts/              # Blog posts (13 files)
+├── _templates/          # Content templates (7 files)
+├── assets/
 │   ├── images/          # Image files
-│   └── videos/          # Video files
+│   ├── videos/          # Video files
+│   └── main.scss        # Custom styles
 ├── 404.html             # 404 error page
-├── about.markdown       # About page
-├── index.markdown       # Home page
-└── ...                  # Other pages
+├── about.md             # About page
+├── index.md            # Home page
+├── topic-*.md          # Topic/category landing pages (5 themed)
+├── topic1.md           # Generic topic page
+├── topic2.md           # Generic topic page
+└── topic3.md           # Generic topic page
 ```
 
 ## Deployment

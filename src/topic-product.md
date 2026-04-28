@@ -5,6 +5,7 @@ permalink: /product/
 categories: product
 card_image: /assets/images/thumb2.png
 published: true
+type: page
 ---
 
 Welcome to our product blog! Stay updated on the latest launches, reviews, and innovations.

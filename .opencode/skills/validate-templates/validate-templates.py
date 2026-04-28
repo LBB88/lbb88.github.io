@@ -42,41 +42,56 @@ def get_layout_from_frontmatter(frontmatter):
     return None
 
 
+def get_type_from_frontmatter(frontmatter):
+    match = re.search(r'type:\s*(\S+)', frontmatter)
+    if match:
+        return match.group(1).strip()
+    return None
+
+
+def get_file_type(frontmatter, filepath):
+    file_type = get_type_from_frontmatter(frontmatter)
+    if file_type in ('page', 'post'):
+        return file_type
+    return 'post' if '_posts' in str(filepath) else 'page'
+
+
 def validate_frontmatter(content, file_type):
     errors = []
-    
+
     if not content.startswith('---'):
         errors.append("Missing frontmatter block")
         return errors, None
-    
+
     match = re.match(r'^---\s*\n(.*?)\n---\s*\n', content, re.DOTALL)
     if not match:
         errors.append("Invalid frontmatter format")
         return errors, None
-    
+
     frontmatter = match.group(1)
-    
+
     for field in ['layout', 'title', 'categories']:
         if f'{field}:' not in frontmatter:
             errors.append(f"Missing '{field}' in frontmatter")
-    
+
     if file_type == 'post' and 'date:' not in frontmatter:
         errors.append("Missing 'date' in frontmatter (required for posts)")
     elif file_type == 'page' and 'permalink:' not in frontmatter:
         errors.append("Missing 'permalink' in frontmatter (required for pages)")
-    
+
     category = get_category_from_frontmatter(frontmatter)
     layout = get_layout_from_frontmatter(frontmatter)
-    
-    if file_type == 'post' and category and layout and category in CATEGORY_LAYOUT_MAP:
+    type_field = get_type_from_frontmatter(frontmatter)
+
+    if type_field != 'page' and category and layout and category in CATEGORY_LAYOUT_MAP:
         expected_layout = CATEGORY_LAYOUT_MAP[category]
         if layout != expected_layout:
             errors.append(
                 f"Layout mismatch: category '{category}' should use layout '{expected_layout}', "
                 f"but found '{layout}'"
             )
-    
-    return errors, (category, layout)
+
+    return errors, (category, layout, type_field)
 
 
 def validate_post_content(content):
@@ -146,14 +161,16 @@ def apply_layout(filepath, category, expected_layout):
 def validate_file(filepath, apply_fixes=False):
     with open(filepath, 'r', encoding='utf-8') as f:
         content = f.read()
-    
-    file_type = 'post' if '_posts' in str(filepath) else 'page'
-    
+
+    match = re.match(r'^---\s*\n(.*?)\n---\s*\n', content, re.DOTALL)
+    frontmatter = match.group(1) if match else ''
+    file_type = get_file_type(frontmatter, filepath)
+
     print(f"\n{'='*60}")
     print(f"Validating: {filepath}")
     print(f"Type: {file_type}")
     print('='*60)
-    
+
     errors, layout_info = validate_frontmatter(content, file_type)
     if not errors:
         print("  ✓ Frontmatter valid")
@@ -164,24 +181,26 @@ def validate_file(filepath, apply_fixes=False):
                 print(f"  ⚠ {error}")
             else:
                 print(f"  ✗ {error}")
-    
+
     if file_type == 'post':
         content_errors = validate_post_content(content)
     else:
         content_errors = validate_page_content(content)
-    
+
     if not content_errors:
         print("  ✓ Liquid blocks valid")
         print("  ✓ Content before Liquid block")
     else:
         for error in content_errors:
             print(f"  ✗ {error}")
-    
+
     errors.extend(content_errors)
-    
+
     if apply_fixes and layout_info:
-        category, layout = layout_info
-        if category and category in CATEGORY_LAYOUT_MAP:
+        category, layout, type_field = layout_info
+        if type_field == 'page':
+            print(f"  ⏭ Skipping layout fix for type=page file (layout must remain 'page')")
+        elif category and category in CATEGORY_LAYOUT_MAP:
             expected_layout = CATEGORY_LAYOUT_MAP[category]
             if layout != expected_layout:
                 if apply_layout(filepath, category, expected_layout):

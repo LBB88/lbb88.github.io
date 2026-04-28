@@ -4,7 +4,8 @@ title: "Retirement"
 permalink: /retirement/
 categories: retirement
 card_image: /assets/images/thumb7.jpeg
-published: false
+published: true
+type: page
 ---
 
 Welcome to our retirement blog! Find inspiration, tips, and stories for living your best retired life.

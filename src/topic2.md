@@ -5,6 +5,7 @@ permalink: /my-topic-2/
 categories: topic2
 card_image: /assets/images/thumb3.jpeg
 published: true
+type: page
 ---
 
 # Ways to Embed Videos in GitHub Page
@@ -36,7 +37,7 @@ You can use a thumbnail image that links to the video. To size the thumbnail, ad
 ```markdown
 [![Video Thumbnail](/assets/images/thumb3.jpeg)](/assets/videos/animate.mp4)
 
-[![Video Thumbnail](/assets/images/thumb9.jpeg){: width="100px"}](/assets/videos/media.mp4)
+[![Video Thumbnail](/assets/images/thumb9.jpeg){: width="100%"}](/assets/videos/media.mp4)
 ```
 
 ### 3. Inline Video Player

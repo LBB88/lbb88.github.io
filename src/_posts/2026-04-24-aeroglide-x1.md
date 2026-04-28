@@ -5,6 +5,7 @@ date: 2026-04-24 11:00:00 +0800
 categories: product
 author: "Tech Insider"
 published: true
+type: post
 ---
 
 The AeroGlide X1 isn't just another electric scooter — it's a complete reimagining of how we move through cities. Lightweight, powerful, and intelligently designed, this is urban mobility evolved.

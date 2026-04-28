@@ -30,6 +30,7 @@ title: "Your Topic Name"
 permalink: /your-topic-path/
 categories: topic1
 card_image: /assets/images/your-image.jpg
+type: page
 published: true
 ---
 

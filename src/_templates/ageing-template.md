@@ -3,6 +3,7 @@ layout: ageing
 title: "Your Ageing Post Title"
 date: YYYY-MM-DD HH:MM:SS +0800
 categories: ageing
+type: post
 author: "Your Name"
 ---
 

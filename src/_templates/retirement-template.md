@@ -3,6 +3,7 @@ layout: retirement
 title: "Your Retirement Post Title"
 date: YYYY-MM-DD HH:MM:SS +0800
 categories: retirement
+type: post
 author: "Your Name"
 ---
 

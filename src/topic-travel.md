@@ -5,6 +5,7 @@ permalink: /travel/
 categories: travel
 card_image: /assets/images/thumb8.jpeg
 published: true
+type: page
 ---
 
 Welcome to our travel blog! Discover destinations, tips, and stories from around the world.

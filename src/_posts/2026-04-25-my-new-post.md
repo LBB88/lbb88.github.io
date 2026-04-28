@@ -4,6 +4,7 @@ title: "My New Post 1 -topic3"
 date: 2026-04-23 10:00:00 +0800
 categories: topic3
 published: true
+type: post
 ---
 
 Your post content goes here. You can use **Markdown** formatting.

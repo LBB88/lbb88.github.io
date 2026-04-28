@@ -5,6 +5,7 @@ date: 2026-04-23 14:00:00 +0800
 categories: music
 author: "Beat Reviewer"
 published: true
+type: post
 ---
 
 Lunar Tides returns with their most ambitious album yet. *Echoes of Tomorrow* blends ambient textures with driving electronic beats, creating a soundscape that feels both nostalgic and futuristic.

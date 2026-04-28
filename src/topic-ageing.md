@@ -4,7 +4,8 @@ title: "Ageing"
 permalink: /ageing/
 categories: ageing
 card_image: /assets/images/thumb5.jpeg
-published: false
+published: true
+type: page
 ---
 
 Welcome to our ageing blog! Celebrating wisdom, wellness, and the beauty of growing older.

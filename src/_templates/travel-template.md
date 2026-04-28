@@ -3,6 +3,7 @@ layout: travel
 title: "Your Travel Post Title"
 date: YYYY-MM-DD HH:MM:SS +0800
 categories: travel
+type: post
 author: "Your Name"
 ---
 

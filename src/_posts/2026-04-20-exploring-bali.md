@@ -5,6 +5,7 @@ date: 2026-04-20 08:00:00 +0800
 categories: travel
 author: "Wanderer Jane"
 published: true
+type: post
 ---
 
 Bali is more than just a tourist destination — it's a feeling. Last month, I ventured off the beaten path to discover hidden beaches that most visitors never see.

@@ -5,6 +5,7 @@ permalink: /music/
 categories: music
 card_image: /assets/images/thumb.png
 published: true
+type: page
 ---
 
 Welcome to our music blog! Discover new releases, reviews, and stories from the world of music.

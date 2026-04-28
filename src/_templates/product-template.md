@@ -3,6 +3,7 @@ layout: product
 title: "Your Product Post Title"
 date: YYYY-MM-DD HH:MM:SS +0800
 categories: product
+type: post
 author: "Your Name"
 ---
 
