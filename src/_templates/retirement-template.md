@@ -1,10 +1,11 @@
 ---
 layout: retirement
-title: "Your Retirement Post Title"
+title: Your Retirement Post Title
 date: YYYY-MM-DD HH:MM:SS +0800
 categories: retirement
 type: post
-author: "Your Name"
+author: Your Name
+published: true
 ---
 
 Share your retirement insights, lifestyle tips, and wisdom here.

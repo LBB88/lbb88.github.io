@@ -1,11 +1,13 @@
 ---
 layout: page
-title: "Your Topic Name"
+title: Your Topic Name
 permalink: /your-topic-path/
 categories: topic1
 card_image: /assets/images/your-image.jpg
 type: page
 published: true
+date: 2026-04-29 10:56:11 +0800
+author: LBB88
 ---
 
 Your page content here. This appears above the post listing.

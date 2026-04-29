@@ -1,10 +1,11 @@
 ---
 layout: music
-title: "Your Music Post Title"
+title: Your Music Post Title
 date: YYYY-MM-DD HH:MM:SS +0800
 categories: music
 type: post
-author: "Your Name"
+author: Your Name
+published: true
 ---
 
 Review an album, share new music discoveries, or discuss the industry.

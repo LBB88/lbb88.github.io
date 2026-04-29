@@ -107,6 +107,10 @@ def get_missing_fields(frontmatter, file_type):
         missing.append('date')
     if file_type == 'post' and 'author' not in data:
         missing.append('author')
+    if file_type == 'post' and 'layout' not in data:
+        missing.append('layout')
+    if file_type == 'post' and 'published' not in data:
+        missing.append('published')
     elif file_type == 'page' and 'permalink' not in data:
         missing.append('permalink')
     # card_image is required for pages (topic landing pages)
@@ -220,6 +224,9 @@ def generate_fix_proposal(filepath, file_type, missing, data, content):
         if 'author' in missing:
             proposal['suggestions']['author'] = 'LBB88'
 
+        if 'published' in missing:
+            proposal['suggestions']['published'] = 'true'
+
         if 'categories' in missing:
             proposal['suggestions']['categories'] = CATEGORIES.copy()
 
@@ -262,6 +269,177 @@ def apply_fix(filepath, file_type, fixes):
         f.write(new_content)
 
     return True, "Fixed"
+
+
+def get_template_defaults(filepath):
+    """Get default frontmatter values for template files based on filename."""
+    filename = filepath.name.replace('.md', '').replace('.markdown', '')
+
+    defaults = {
+        'author': 'LBB88',
+        'published': 'true',
+    }
+
+    # Determine layout, type, and categories from filename
+    if filename.startswith('post-') and filename != 'post-template':
+        # e.g., post-50s -> layout: post-50s, type: post, categories: 50s
+        category = filename.replace('post-', '')
+        defaults['layout'] = filename  # e.g., post-50s
+        defaults['type'] = 'post'
+        defaults['categories'] = category
+        defaults['title'] = category.replace('-', ' ').title() + ' Post'
+    elif filename.endswith('-template'):
+        # e.g., travel-template -> layout: travel, type: post, categories: travel
+        category = filename.replace('-template', '')
+        defaults['layout'] = category
+        defaults['type'] = 'post'
+        defaults['categories'] = category
+        defaults['title'] = category.replace('-', ' ').title() + ' Post'
+    elif filename == 'post-template':
+        defaults['layout'] = 'post'
+        defaults['type'] = 'post'
+        defaults['categories'] = 'topic1'
+        defaults['title'] = 'Your Post Title'
+    else:
+        # Generic fallback
+        defaults['layout'] = 'post'
+        defaults['type'] = 'post'
+        defaults['categories'] = 'topic1'
+        defaults['title'] = filename.replace('-', ' ').title()
+
+    # Add date
+    defaults['date'] = datetime.now().strftime('%Y-%m-%d %H:%M:%S +0800')
+
+    return defaults
+
+
+def find_template_files():
+    """Find all template files except page-template.md."""
+    templates_dir = SRC_DIR / "_templates"
+    if not templates_dir.exists():
+        return []
+    files = []
+    for md_file in templates_dir.glob("*.md"):
+        if md_file.name == "page-template.md":
+            continue
+        files.append(md_file)
+    return sorted(files)
+
+
+def fix_template_files(interactive=True):
+    """Fix missing frontmatter fields in template files (except page_template.md)."""
+    files = find_template_files()
+    if not files:
+        return [], []
+
+    fixed = []
+    issues = []
+
+    for filepath in files:
+        with open(filepath, 'r', encoding='utf-8') as f:
+            content = f.read()
+
+        frontmatter, end_pos = extract_frontmatter(content)
+        data = parse_frontmatter(frontmatter) if frontmatter else {}
+        file_type = data.get('type', 'post')
+
+        # Get required fields for posts/templates
+        required_fields = ['layout', 'title', 'date', 'categories', 'author', 'published', 'type']
+        missing = [f for f in required_fields if f not in data]
+
+        if not missing:
+            continue
+
+        defaults = get_template_defaults(filepath)
+        fixes = {f: defaults.get(f, '') for f in missing}
+
+        if interactive:
+            print(f"\n{'='*60}")
+            print(f"TEMPLATE FRONTMATTER FIX: {filepath.name}")
+            print(f"Missing fields: {', '.join(missing)}")
+            print("="*60)
+
+            for field in missing:
+                suggestion = fixes[field]
+                if field == 'categories':
+                    print(f"\n  Field: {field}")
+                    print("  Suggestions:")
+                    for i, opt in enumerate(CATEGORIES, 1):
+                        print(f"    {i}. {opt}")
+                    print("    c. Enter custom value")
+                    print("    s. Skip this field")
+                    while True:
+                        response = input("  Select [1-{}], c, or s: ".format(len(CATEGORIES))).strip().lower()
+                        if response == 's':
+                            fixes[field] = None
+                            break
+                        if response == 'c':
+                            fixes[field] = input("  Enter custom value: ").strip()
+                            break
+                        try:
+                            idx = int(response) - 1
+                            if 0 <= idx < len(CATEGORIES):
+                                fixes[field] = CATEGORIES[idx]
+                                break
+                        except ValueError:
+                            pass
+                        print("  Invalid choice, try again.")
+                elif field == 'layout':
+                    print(f"\n  Field: {field}")
+                    print("  Suggestions:")
+                    for i, opt in enumerate(LAYOUTS, 1):
+                        print(f"    {i}. {opt}")
+                    print("    c. Enter custom value")
+                    print("    s. Skip this field")
+                    while True:
+                        response = input("  Select [1-{}], c, or s: ".format(len(LAYOUTS))).strip().lower()
+                        if response == 's':
+                            fixes[field] = None
+                            break
+                        if response == 'c':
+                            fixes[field] = input("  Enter custom value: ").strip()
+                            break
+                        try:
+                            idx = int(response) - 1
+                            if 0 <= idx < len(LAYOUTS):
+                                fixes[field] = LAYOUTS[idx]
+                                break
+                        except ValueError:
+                            pass
+                        print("  Invalid choice, try again.")
+                else:
+                    value = prompt_for_field(field, suggestion)
+                    if value is not None:
+                        fixes[field] = value
+                    else:
+                        fixes[field] = None
+
+            fixes = {k: v for k, v in fixes.items() if v is not None}
+
+            if not fixes:
+                print("\n  No fixes selected. Skipping.")
+                continue
+
+            print(f"\n  Summary of fixes for {filepath.name}:")
+            for k, v in fixes.items():
+                print(f"    {k}: {v}")
+
+            confirm = input("\n  Apply these fixes? [y/N]: ").strip().lower()
+            if confirm != 'y':
+                print("  Skipped.")
+                continue
+        else:
+            # Non-interactive: use defaults
+            fixes = {k: v for k, v in fixes.items() if v}
+
+        success, msg = apply_fix(filepath, file_type, fixes)
+        if success:
+            fixed.append(filepath)
+            print(f"  ✓ Fixed frontmatter in {filepath.name}")
+        else:
+            issues.append((filepath, msg))
+
+    return fixed, issues
 
 
 def main():

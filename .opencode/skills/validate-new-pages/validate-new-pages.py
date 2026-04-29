@@ -295,6 +295,11 @@ def main():
         dest="do_import",
         help="Import media from /import/ folders before validation"
     )
+    parser.add_argument(
+        "--templates",
+        action="store_true",
+        help="Validate and fix template files only (excludes page_template.md)"
+    )
 
     args = parser.parse_args()
 
@@ -318,6 +323,43 @@ def main():
         print("=" * 60)
         import_media_and_embed()
         print()
+
+    if not args.pages and not args.posts:
+        print("=" * 60)
+        print("TEMPLATE FRONTMATTER FIX")
+        print("=" * 60)
+        template_fixed, template_issues = FIX_FRONTMATTER.fix_template_files(interactive=is_interactive())
+        if template_fixed:
+            print(f"\nFixed frontmatter in {len(template_fixed)} template file(s)")
+        else:
+            print("\nNo template frontmatter fixes needed.")
+        print()
+
+    if args.templates:
+        print("=" * 60)
+        print("TEMPLATE VALIDATION")
+        print("=" * 60)
+        template_files = FIX_FRONTMATTER.find_template_files()
+        if not template_files:
+            print("No template files found.")
+            cleanup_import_folders()
+            sys.exit(0)
+        for tf in template_files:
+            print(f"  - {tf}")
+        print()
+        all_passed = True
+        for tf in template_files:
+            result = run_validator(tf, apply_fixes=args.apply)
+            if result.returncode != 0:
+                all_passed = False
+            print()
+        cleanup_import_folders()
+        if not all_passed:
+            print("✗ Some templates failed validation.")
+            sys.exit(1)
+        else:
+            print("✓ All templates passed validation.")
+            sys.exit(0)
 
     files = find_files(pages_only=args.pages, posts_only=args.posts)
 

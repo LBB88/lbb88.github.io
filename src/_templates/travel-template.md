@@ -1,10 +1,11 @@
 ---
 layout: travel
-title: "Your Travel Post Title"
+title: Your Travel Post Title
 date: YYYY-MM-DD HH:MM:SS +0800
 categories: travel
 type: post
-author: "Your Name"
+author: Your Name
+published: true
 ---
 
 Write your travel story here. Describe destinations, experiences, and tips for fellow travelers.

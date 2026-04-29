@@ -4,7 +4,7 @@ title: "Music"
 permalink: /music/
 categories: music
 card_image: /assets/images/thumb.png
-published: true
+published: false
 type: page
 ---
 

@@ -1,10 +1,11 @@
 ---
 layout: ageing
-title: "Your Ageing Post Title"
+title: Your Ageing Post Title
 date: YYYY-MM-DD HH:MM:SS +0800
 categories: ageing
 type: post
-author: "Your Name"
+author: Your Name
+published: true
 ---
 
 Share stories, advice, and perspectives on ageing well.

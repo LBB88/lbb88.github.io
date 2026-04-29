@@ -18,10 +18,10 @@
 # You can create any custom variable you would like, and they will be accessible
 # in the templates via {{ site.myvariable }}.
 
-title: LBB88 Studio
+title: LBB88 AI Rambles
 email: tbd@test.com
 description: >- # this means to ignore newlines until "baseurl:"
- I’ve closed the book on my working life and am navigating the transition. To keep the gears turning, I’ve been experimenting with some new hobbies - it’s been a refreshing challenge to stay mentally active, while finally being the boss of my own schedule.
+ I’ve closed the book on my working life and am navigating the transition. To keep the gears turning, I’ve been experimenting with some new hobbies especially with new technologies - it’s been a refreshing challenge to stay mentally active, while finally being the boss of my own schedule and also my AI agents.
 # Write an awesome description for your new site here. You can edit this line in _config.yml. It will appear in your document head meta (for Google search results) and in your feed.xml site description.
 baseurl: "" # the subpath of your site, e.g. /blog
 url: "https://lbb88.github.io" # the base hostname & protocol for your site, e.g. http://example.com

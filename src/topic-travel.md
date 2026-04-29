@@ -4,7 +4,7 @@ title: "Travel"
 permalink: /travel/
 categories: travel
 card_image: /assets/images/thumb8.jpeg
-published: true
+published: false
 type: page
 ---
 

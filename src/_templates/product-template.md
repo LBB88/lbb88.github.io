@@ -1,10 +1,11 @@
 ---
 layout: product
-title: "Your Product Post Title"
+title: Your Product Post Title
 date: YYYY-MM-DD HH:MM:SS +0800
 categories: product
 type: post
-author: "Your Name"
+author: Your Name
+published: true
 ---
 
 Introduce a new product, review features, or share launch details.

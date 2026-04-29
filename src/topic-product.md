@@ -4,7 +4,7 @@ title: "Product"
 permalink: /product/
 categories: product
 card_image: /assets/images/thumb2.png
-published: true
+published: false
 type: page
 ---
 

@@ -4,7 +4,7 @@ title: "Exploring the Hidden Beaches of Bali"
 date: 2026-04-20 08:00:00 +0800
 categories: travel
 author: "Wanderer Jane"
-published: true
+published: false
 type: post
 ---
 

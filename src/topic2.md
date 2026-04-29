@@ -4,7 +4,7 @@ title: "Topic 2 Page"
 permalink: /my-topic-2/
 categories: topic2
 card_image: /assets/images/thumb3.jpeg
-published: true
+published: false
 type: page
 ---
 
