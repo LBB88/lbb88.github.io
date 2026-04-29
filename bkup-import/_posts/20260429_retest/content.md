@@ -1,15 +1,10 @@
 ---
-layout: post-50s
-title: "Blog Launch - Your Complete Guide to Post-50s Nutrition in Singapore"
-date: 2026-04-28 00:00:00 +0800
-categories: 50s
-author: "LBB88"
-type: post
-published: true
+title: Blog Launch - Your Complete Guide to Post-50s Nutrition in Singapore
+description: Facebook announcement for the blog post launch
+published: 2026-04-28
+day: 1
 ---
 
-
-![2026-04-28-blog-launch-your-complete-guide-to-pos-facebook-day1](/assets/images/2026-04-28-blog-launch-your-complete-guide-to-pos-facebook-day1.png)
 # Day 1
 
 🍽️ Turning 50? Your plate needs a makeover.
@@ -22,7 +17,6 @@ Inside, you'll discover:
 ✅ Singapore's My Healthy Plate framework made simple
 ✅ How to transition from white rice to brown (without the family complaining)
 ✅ Hawker centre hacks that actually work
-![2026-04-28-blog-launch-x](/assets/images/2026-04-28-blog-launch-x.png)
 ✅ A full day's sample menu using local foods
 ✅ Why you're probably eating too much salt (and how to cut back)
 
