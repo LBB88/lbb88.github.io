@@ -3,14 +3,14 @@ layout: page
 title: "Music"
 permalink: /music/
 categories: music
-card_image: /assets/images/thumb.png
+card_image: /assets/images/logo.jpg
 published: true
 type: page
 ---
 
 Welcome to my music blog! Discover new releases and stories from the world of music.
 
-![Music Banner](/assets/images/img.jpg)
+![Music Banner](/assets/images/logo.jpg)
 
 ## Explore Music Posts
 
