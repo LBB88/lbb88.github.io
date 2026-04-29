@@ -61,12 +61,6 @@ def _find_paragraph_positions(body: str) -> List[int]:
 
 
 def calculate_insertion_points(body: str, media_count: int) -> List[int]:
-    """Calculate line indices where media references should be inserted.
-
-    Rules:
-      * media_count == 1  -> [0] (insert at body start)
-      * media_count  > 1  -> first media at 0, remaining evenly spaced
-    """
     if media_count <= 0:
         return []
 
@@ -76,36 +70,36 @@ def calculate_insertion_points(body: str, media_count: int) -> List[int]:
     if media_count == 1:
         return [0]
 
-    insertion_points = [0]
-    remaining = media_count - 1
+    if total_lines == 0:
+        return [0] * media_count
 
     headings = find_heading_positions(body)
+    paragraphs = _find_paragraph_positions(body)
 
-    if headings:
-        # Skip headings[0] since first media is already at position 0
-        subsequent_headings = headings[1:]
-        heading_idx = 0
-        for i in range(remaining):
-            if heading_idx < len(subsequent_headings):
-                insertion_points.append(subsequent_headings[heading_idx])
-                heading_idx += 1
-            else:
-                insertion_points.append(total_lines)
-    else:
-        paragraphs = _find_paragraph_positions(body)
-        if not paragraphs:
-            insertion_points.extend([total_lines] * remaining)
-            return insertion_points
+    insertion_points = [0]
+    last_pos = 0
 
-        sections = max(remaining + 1, 3)
-        group_size = max(1, len(paragraphs) // sections)
+    for i in range(1, media_count):
+        target_line = int((i / media_count) * total_lines)
 
-        for i in range(1, remaining + 1):
-            para_idx = i * group_size
-            if para_idx < len(paragraphs):
-                insertion_points.append(paragraphs[para_idx])
-            else:
-                insertion_points.append(total_lines)
+        best_pos = target_line
+
+        if headings:
+            for h in headings:
+                if h > last_pos and h <= target_line:
+                    best_pos = h
+            if best_pos == target_line:
+                for h in headings:
+                    if h > target_line:
+                        best_pos = h
+                        break
+        elif paragraphs:
+            for p in paragraphs:
+                if p > last_pos and p <= target_line:
+                    best_pos = p
+
+        insertion_points.append(best_pos)
+        last_pos = best_pos
 
     return insertion_points
 
