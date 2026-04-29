@@ -82,9 +82,13 @@ def calculate_insertion_points(body: str, media_count: int) -> List[int]:
     headings = find_heading_positions(body)
 
     if headings:
+        # Skip headings[0] since first media is already at position 0
+        subsequent_headings = headings[1:]
+        heading_idx = 0
         for i in range(remaining):
-            if i < len(headings):
-                insertion_points.append(headings[i])
+            if heading_idx < len(subsequent_headings):
+                insertion_points.append(subsequent_headings[heading_idx])
+                heading_idx += 1
             else:
                 insertion_points.append(total_lines)
     else:
