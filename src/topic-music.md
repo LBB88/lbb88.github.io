@@ -8,7 +8,7 @@ published: true
 type: page
 ---
 
-Welcome to our music blog! Discover new releases, reviews, and stories from the world of music.
+Welcome to my music blog! Discover new releases and stories from the world of music.
 
 ![Music Banner](/assets/images/img.jpg)
 

@@ -43,15 +43,10 @@ def find_heading_positions(body: str) -> List[int]:
 
 
 def _find_paragraph_positions(body: str) -> List[int]:
-    """Find the start line of each paragraph.
-
-    A paragraph starts at a non-empty line that follows an empty line
-    or is the very first line of the body.
-    """
     lines = body.splitlines()
     paragraphs = []
     prev_empty = True
-    for i, line in enumerate(lines):
+    for i, line in enumerate(body.splitlines()):
         if line.strip():
             if prev_empty:
                 paragraphs.append(i)
@@ -61,20 +56,20 @@ def _find_paragraph_positions(body: str) -> List[int]:
     return paragraphs
 
 
-def is_bullet_list_line(line: str) -> bool:
-    """Check if line is a bullet list item."""
+def _is_list_item(line: str) -> bool:
     stripped = line.strip()
     return bool(re.match(r'^[-*+]\s', stripped)) or bool(re.match(r'^\d+\.\s', stripped))
 
 
-def find_safe_insertion_points(body: str) -> List[int]:
-    """Find safe end positions for media insertion.
+def _is_emoji_prefixed(line: str) -> bool:
+    stripped = line.strip()
+    if not stripped or len(stripped) < 2:
+        return False
+    first_char = stripped[0]
+    return ord(first_char) > 127
 
-    Returns positions that are the END of a content block:
-    - After headings
-    - After paragraphs (empty line follows)
-    - After bullet/numbered lists
-    """
+
+def find_safe_insertion_points(body: str) -> List[int]:
     lines = body.splitlines()
     total = len(lines)
 
@@ -86,43 +81,40 @@ def find_safe_insertion_points(body: str) -> List[int]:
     for i, line in enumerate(lines):
         stripped = line.strip()
 
-        # Heading - safe (insert after heading)
-        if stripped.startswith('# '):
-            safe.append(i)
-            continue
-
-        # Empty line - safe (end of paragraph)
         if not stripped:
             safe.append(i)
             continue
 
-        # Last line - safe
+        if stripped.startswith('# '):
+            safe.append(i)
+            continue
+
         if i == total - 1:
             safe.append(i)
             continue
 
-        # Check if this is end of a block
-        is_list_item = bool(re.match(r'^[-*+]\s', stripped)) or bool(re.match(r'^\d+\.\s', stripped))
+        is_list = _is_list_item(stripped)
+        is_emoji = _is_emoji_prefixed(line)
 
-        if is_list_item:
-            next_line = lines[i + 1]
-            next_stripped = next_line.strip()
+        if is_list or is_emoji:
+            j = i
+            while j < total:
+                j_line = lines[j].strip()
+                j_is_list = _is_list_item(j_line)
+                j_is_emoji = _is_emoji_prefixed(lines[j])
+                if not j_is_list and not j_is_emoji:
+                    break
+                j += 1
 
-            # End of list if next is empty, heading, or non-list
-            next_is_list = bool(re.match(r'^[-*+]\s', next_stripped)) or bool(re.match(r'^\d+\.\s', next_stripped))
-
-            if not next_is_list:
-                safe.append(i)
+            last_list_line = j - 1 if j < total else total - 1
+            safe.append(last_list_line)
             continue
 
-        # Non-list, non-heading, non-empty content - safe only if followed by break
-        if not stripped.startswith('# ') and not is_list_item:
-            next_line = lines[i + 1]
-            next_stripped = next_line.strip()
+        next_line = lines[i + 1]
+        next_stripped = next_line.strip()
 
-            # Safe if next is empty, heading, or we're at end
-            if not next_stripped or next_stripped.startswith('# ') or i + 1 == total - 1:
-                safe.append(i)
+        if not next_stripped or next_stripped.startswith('# ') or i + 1 == total - 1:
+            safe.append(i)
             continue
 
     if 0 not in safe:
@@ -144,33 +136,25 @@ def calculate_insertion_points(body: str, media_count: int) -> List[int]:
     if total_lines == 0:
         return [0] * media_count
 
-    # Get safe insertion points
     safe_points = find_safe_insertion_points(body)
 
-    # Calculate target positions evenly distributed
-    target_positions = []
+    if len(safe_points) < media_count:
+        safe_points = list(range(total_lines))
+
+    result = []
+    last_pos = -1
+
     for i in range(media_count):
         target = int((i / media_count) * total_lines)
-        target_positions.append(target)
 
-    # Map targets to nearest safe points that don't go backwards
-    result = []
-    last_pos = 0
-
-    for target in target_positions:
-        # Find safe point >= target, or the last one before target if none after
-        best_pos = safe_points[0] if safe_points else 0
+        best_pos = safe_points[-1] if safe_points else total_lines - 1
 
         for sp in safe_points:
-            if sp >= target:
-                # This safe point is at or after target - use it if not going backwards
-                if sp >= last_pos:
-                    best_pos = sp
-                    break
-            else:
-                # Track the last safe point before target
-                if sp >= last_pos:
-                    best_pos = sp
+            if sp > last_pos and sp > target:
+                best_pos = sp
+                break
+            elif sp > last_pos:
+                best_pos = sp
 
         result.append(best_pos)
         last_pos = best_pos
