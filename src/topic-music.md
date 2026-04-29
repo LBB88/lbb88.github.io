@@ -1,6 +1,6 @@
 ---
 layout: page
-title: "Music"
+title: "AI Music"
 permalink: /music/
 categories: music
 card_image: /assets/images/logo.jpg
@@ -8,7 +8,7 @@ published: true
 type: page
 ---
 
-Welcome to my music blog! Discover new releases and stories from the world of music.
+Welcome to my AI music blog! Discover new releases and stories from the world of music.
 
 ![Music Banner](/assets/images/logo.jpg)
 

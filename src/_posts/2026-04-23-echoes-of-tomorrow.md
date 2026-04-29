@@ -1,10 +1,10 @@
 ---
 layout: music
-title: "New Release: Echoes of Tomorrow by Lunar Tides"
+title: "New Release: Test"
 date: 2026-04-23 14:00:00 +0800
 categories: music
 author: "Beat Reviewer"
-published: true
+published: false
 type: post
 ---
 
