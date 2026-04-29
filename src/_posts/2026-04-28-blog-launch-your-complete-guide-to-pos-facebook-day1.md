@@ -1,8 +1,9 @@
 ---
-layout: ageing
+layout: post-50s
 title: "Blog Launch - Your Complete Guide to Post-50s Nutrition in Singapore"
 date: 2026-04-28 00:00:00 +0800
-categories: ageing
+categories: 50s
+author: "LBB88"
 type: post
 published: true
 ---

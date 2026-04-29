@@ -22,6 +22,7 @@ CATEGORY_LAYOUT_MAP = {
     'ageing': 'ageing',
     'music': 'music',
     'product': 'product',
+    '50s': 'post-50s',
     'topic1': 'post',
     'topic2': 'post',
     'topic3': 'post',
@@ -73,6 +74,9 @@ def validate_frontmatter(content, file_type):
     for field in ['layout', 'title', 'categories']:
         if f'{field}:' not in frontmatter:
             errors.append(f"Missing '{field}' in frontmatter")
+
+    if file_type == 'post' and 'author:' not in frontmatter:
+        errors.append("Missing 'author' in frontmatter (required for posts)")
 
     if file_type == 'post' and 'date:' not in frontmatter:
         errors.append("Missing 'date' in frontmatter (required for posts)")
