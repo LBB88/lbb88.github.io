@@ -5,6 +5,7 @@ and insert image or video references at calculated insertion points within the b
 """
 
 import os
+import re
 from typing import List, Tuple
 
 
@@ -60,6 +61,76 @@ def _find_paragraph_positions(body: str) -> List[int]:
     return paragraphs
 
 
+def is_bullet_list_line(line: str) -> bool:
+    """Check if line is a bullet list item."""
+    stripped = line.strip()
+    return bool(re.match(r'^[-*+]\s', stripped)) or bool(re.match(r'^\d+\.\s', stripped))
+
+
+def find_safe_insertion_points(body: str) -> List[int]:
+    """Find safe end positions for media insertion.
+
+    Returns positions that are the END of a content block:
+    - After headings
+    - After paragraphs (empty line follows)
+    - After bullet/numbered lists
+    """
+    lines = body.splitlines()
+    total = len(lines)
+
+    if total == 0:
+        return []
+
+    safe = []
+
+    for i, line in enumerate(lines):
+        stripped = line.strip()
+
+        # Heading - safe (insert after heading)
+        if stripped.startswith('# '):
+            safe.append(i)
+            continue
+
+        # Empty line - safe (end of paragraph)
+        if not stripped:
+            safe.append(i)
+            continue
+
+        # Last line - safe
+        if i == total - 1:
+            safe.append(i)
+            continue
+
+        # Check if this is end of a block
+        is_list_item = bool(re.match(r'^[-*+]\s', stripped)) or bool(re.match(r'^\d+\.\s', stripped))
+
+        if is_list_item:
+            next_line = lines[i + 1]
+            next_stripped = next_line.strip()
+
+            # End of list if next is empty, heading, or non-list
+            next_is_list = bool(re.match(r'^[-*+]\s', next_stripped)) or bool(re.match(r'^\d+\.\s', next_stripped))
+
+            if not next_is_list:
+                safe.append(i)
+            continue
+
+        # Non-list, non-heading, non-empty content - safe only if followed by break
+        if not stripped.startswith('# ') and not is_list_item:
+            next_line = lines[i + 1]
+            next_stripped = next_line.strip()
+
+            # Safe if next is empty, heading, or we're at end
+            if not next_stripped or next_stripped.startswith('# ') or i + 1 == total - 1:
+                safe.append(i)
+            continue
+
+    if 0 not in safe:
+        safe.insert(0, 0)
+
+    return sorted(set(safe))
+
+
 def calculate_insertion_points(body: str, media_count: int) -> List[int]:
     if media_count <= 0:
         return []
@@ -73,35 +144,38 @@ def calculate_insertion_points(body: str, media_count: int) -> List[int]:
     if total_lines == 0:
         return [0] * media_count
 
-    headings = find_heading_positions(body)
-    paragraphs = _find_paragraph_positions(body)
+    # Get safe insertion points
+    safe_points = find_safe_insertion_points(body)
 
-    insertion_points = [0]
+    # Calculate target positions evenly distributed
+    target_positions = []
+    for i in range(media_count):
+        target = int((i / media_count) * total_lines)
+        target_positions.append(target)
+
+    # Map targets to nearest safe points that don't go backwards
+    result = []
     last_pos = 0
 
-    for i in range(1, media_count):
-        target_line = int((i / media_count) * total_lines)
+    for target in target_positions:
+        # Find safe point >= target, or the last one before target if none after
+        best_pos = safe_points[0] if safe_points else 0
 
-        best_pos = target_line
+        for sp in safe_points:
+            if sp >= target:
+                # This safe point is at or after target - use it if not going backwards
+                if sp >= last_pos:
+                    best_pos = sp
+                    break
+            else:
+                # Track the last safe point before target
+                if sp >= last_pos:
+                    best_pos = sp
 
-        if headings:
-            for h in headings:
-                if h > last_pos and h <= target_line:
-                    best_pos = h
-            if best_pos == target_line:
-                for h in headings:
-                    if h > target_line:
-                        best_pos = h
-                        break
-        elif paragraphs:
-            for p in paragraphs:
-                if p > last_pos and p <= target_line:
-                    best_pos = p
-
-        insertion_points.append(best_pos)
+        result.append(best_pos)
         last_pos = best_pos
 
-    return insertion_points
+    return result
 
 
 def format_media_reference(media_path: str, is_video: bool = False, thumb_path: str = None) -> str:
